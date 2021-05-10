@@ -52,6 +52,14 @@ public class ElectricAutomobile extends Automobile {
 		System.out.print(" | zasieg: " + drivingRange + " | zycie baterii: " + batteryLife);
 	}
 	
+	public void showCurrent() {
+		super.showCurrent();
+		System.out.println(
+			"Maksymalny zasieg: " + drivingRange
+			+ "\nZywotnosc baterii: " + batteryLife
+		);
+	}
+	
 	public void setDrivingRange(int drivingRange) {
 		this.drivingRange=drivingRange;
 	}

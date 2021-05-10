@@ -6,9 +6,18 @@ import java.util.Scanner;
 public class Fleet extends Vehicle {
 	private static final long serialVersionUID = 1L;
 	protected Vehicle vehicles[];
+	protected Vehicle foundPrice[];
+	protected Vehicle foundMake[];
+	protected Vehicle sorted[];
 	protected int size;
 	protected int quantity;
 	protected int current;
+	protected int currentFoundPrice;
+	protected int sizeFoundPrice;
+	protected int currentFoundMake;
+	protected int sizeFoundMake;
+	protected int currentSorted;
+	protected int sizeSorted;
 	private int i;
 	
 	public Fleet() {
@@ -20,19 +29,27 @@ public class Fleet extends Vehicle {
 	{
 		this.size=size;
 		vehicles=new Vehicle[size];
+		foundPrice = new Vehicle[size];
 		for (i=0; i<size; i++)
 			vehicles[i]=new Vehicle();
 		quantity=0;
 		current=-1;
+		currentFoundPrice=-1;
+		currentFoundMake=-1;
+		currentSorted=-1;
 	}
 	
 	public void newFleet(int size) {
 		this.size=size;
 		vehicles=new Vehicle[size];
+		foundPrice = new Vehicle[size];
 		for (i=0; i<size; i++)
 			vehicles[i]=new Vehicle();
 		quantity=0;
 		current=-1;
+		currentFoundPrice=-1;
+		currentFoundMake=-1;
+		currentSorted=-1;
 	}
 	
 	public void clearAll() {
@@ -40,6 +57,9 @@ public class Fleet extends Vehicle {
 			vehicles[i]=new Vehicle();
 		quantity=0;
 		current=-1;
+		currentFoundPrice=-1;
+		currentFoundMake=-1;
+		currentSorted=-1;
 	}
 	
 	public void addVehicle(Vehicle v) {
@@ -74,10 +94,10 @@ public class Fleet extends Vehicle {
 			current--;
 	}
 	
-	public Vehicle showCurrent() {
+	public void showCurrent() {
+		System.out.println("\n\n");
 		if(current>=0)
-			return vehicles[current] ;
-		return null;
+			vehicles[current].showCurrent();
 	}
 	
 	public void deleteCurrent() {
@@ -93,6 +113,46 @@ public class Fleet extends Vehicle {
 				quantity=0;
 			}
 		}
+	}
+	
+	boolean searchPrice(double min, double max)
+	{
+		sizeFoundPrice = 0;
+		currentFoundPrice = -1;
+		
+		for(i = 0; i<quantity; i++)
+		{
+			if(vehicles[i].getPrice() >= min && vehicles[i].getPrice() <= max)
+			{
+				foundPrice[sizeFoundPrice]=vehicles[i];
+				sizeFoundPrice++;
+			}
+		}
+		if(sizeFoundPrice != 0)
+		{
+			currentFoundPrice = 0;
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	void showCurrentFoundPrice()
+	{
+		if (currentFoundPrice>=0)
+			foundPrice[currentFoundPrice].showCurrent();
+	}
+	
+	void nextFoundPrice()
+	{
+		if(currentFoundPrice<sizeFoundPrice-1)
+			currentFoundPrice++;
+	}
+
+	void previousFoundPrice()
+	{
+		if(currentFoundPrice>0)
+			currentFoundPrice--;
 	}
 	
 	public void saveFile()
@@ -134,9 +194,17 @@ public class Fleet extends Vehicle {
 			c.printStackTrace();
 			return;
 		}
+		
+		if(quantity>0) {
+			current=0;
+		}
 	}
 	
 	public int getSize() {
 		return size;
+	}
+	
+	public int getQuantity() {
+		return quantity;
 	}
 }

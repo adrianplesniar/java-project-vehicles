@@ -52,6 +52,14 @@ public class GasAutomobile extends Automobile {
 		System.out.print(" | pojemnosc silnika: " + engineCapacity + " | spalanie: " + fuelEconomy);
 	}
 	
+	public void showCurrent() {
+		super.showCurrent();
+		System.out.println(
+			"Poejmnosc silnika: " + engineCapacity
+			+ "\nSrednie spalanie: " + fuelEconomy	
+		);
+	}
+	
 	public void setEngineCapacity(int engineCapacity) {
 		this.engineCapacity=engineCapacity;
 	}

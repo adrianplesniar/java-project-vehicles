@@ -47,6 +47,14 @@ public class Automobile extends Vehicle {
 		System.out.print(" | nadwozie: " + bodyStyle + " | pojemnosc bagaznika: " + cargoCapacity);
 	}
 	
+	public void showCurrent() {
+		super.showCurrent();
+		System.out.println(
+			"Rodzaj nadwozia: " + bodyStyle
+			+ "\nPojemnosc bagaznika: " + cargoCapacity	
+		);
+	}
+	
 	public void setBodyStyle(String bodyStyle) {
 		this.bodyStyle=bodyStyle;
 	}

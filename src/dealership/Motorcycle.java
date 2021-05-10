@@ -48,6 +48,14 @@ public class Motorcycle extends Vehicle {
 		System.out.print(" | typ: " + type + " | homologacja: " + isStreetLegal);
 	}
 	
+	public void showCurrent() {
+		super.showCurrent();
+		System.out.println(
+			"Rodzaj motocykla: " + type
+			+ "\nHomologacja: " + isStreetLegal	
+		);
+	}
+	
 	public void setType(String type) {
 		this.type=type;
 	}

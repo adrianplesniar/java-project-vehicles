@@ -48,6 +48,16 @@ public class Vehicle implements Serializable {
 		);
 	}
 	
+	public void showCurrent() {
+		System.out.println(
+			"Marka: " + make
+			+ "\nModel: " + model
+			+ "\nMoc silnika: " + horsepower
+			+ "\nRok produkcji: " + year
+			+ "\nCena: " + price	
+		);
+	}
+	
 	public void setMake(String make) {
 		this.make=make;
 	}
