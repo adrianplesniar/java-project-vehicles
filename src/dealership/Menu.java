@@ -212,7 +212,7 @@ public class Menu {
 						fleet.showCurrent();
 						break;
 					case 'd':
-						System.out.println("Czy na pewno chcesz usunac bierzacy element? t = tak");
+						System.out.println("Czy na pewno chcesz usun¹æ bierz¹cy element? t = tak");
 						String deleteCurrent = scanner.next();
 						if(deleteCurrent.charAt(0) == 't') {
 							fleet.deleteCurrent();
@@ -228,11 +228,11 @@ public class Menu {
 			}
 			break;
 		case '6':
-			System.out.print("Podaj wartosc indeksu: ");
+			System.out.print("Podaj wartoœæ indeksu: ");
 			index = scanner.nextInt();
 			int maxIndex = fleet.getQuantity()-1;
 			if(fleet.setCurrent(index)) {
-				System.out.println("Wprowadzono bledna wartosc! Podaj wartosc z przedzialu <0," + maxIndex + ">.");
+				System.out.println("Wprowadzono b³êdnœ wartoœæ! Podaj wartoæœ z przedzia³u <0," + maxIndex + ">.");
 			} else {
 				fleet.setCurrent(index);
 			}
