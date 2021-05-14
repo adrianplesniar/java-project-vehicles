@@ -136,8 +136,20 @@ public class Menu {
 				}while(valid == false);
 				System.out.print("Nadwozie: ");
 				bodyStyle = scanner.next();
-				System.out.print("Pojemnoœæ baga¿nika: ");
-				cargoCapacity = scanner.nextInt();
+				valid = false;
+				do {
+					System.out.print("Pojemnoœæ baga¿nika: ");
+					if(scanner.hasNextInt()) {
+						cargoCapacity = scanner.nextInt();
+						if(cargoCapacity>0)
+							valid = true;
+						else
+							System.out.println("Podano b³êdn¹ wartoœæ");
+					} else {
+						System.out.println("Podano b³êdn¹ wartoœæ");
+						scanner.next();
+					}	
+				}while(valid == false);
 				System.out.print("Pojemnoœæ silnika: ");
 				engineCapacity = scanner.nextDouble();
 				System.out.print("Spalanie: ");
