@@ -150,8 +150,20 @@ public class Menu {
 						scanner.next();
 					}	
 				}while(valid == false);
-				System.out.print("Pojemnoœæ silnika: ");
-				engineCapacity = scanner.nextDouble();
+				valid = false;
+				do {
+					System.out.print("Pojemnoœæ silnika: ");
+					if(scanner.hasNextDouble()) {
+						engineCapacity = scanner.nextDouble();
+						if(engineCapacity>0)
+							valid = true;
+						else
+							System.out.println("Podano b³êdn¹ wartoœæ");
+					} else {
+						System.out.println("Podano b³êdn¹ wartoœæ");
+						scanner.next();
+					}	
+				}while(valid == false);
 				System.out.print("Spalanie: ");
 				fuelEconomy = scanner.nextDouble();
 				fleet.addVehicle(new GasAutomobile(make, model, horsepower, year, price, bodyStyle, cargoCapacity, engineCapacity, fuelEconomy));
