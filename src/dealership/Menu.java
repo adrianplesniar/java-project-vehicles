@@ -5,11 +5,12 @@ import java.util.Scanner;
 
 public class Menu {
 	private static Scanner scanner = new Scanner(System.in);
-	static String make, model, bodyStyle, type, isStreetLegal;
+	static String make, model, bodyStyle, type, isStreetLegal, makeName;
 	static int horsepower, year, cargoCapacity, drivingRange, batteryLife, min, max;
 	static double price, fuelEconomy, engineCapacity;
 	static int size, index;
 	static Fleet fleet = new Fleet();
+	static boolean valid;
 
 	public static void main(String[] args) {
 		scanner.useLocale(Locale.US);
@@ -37,6 +38,7 @@ public class Menu {
 		System.out.println("5 - Wyswietl bierz¹cy");
 		System.out.println("6 - Ustaw bierz¹cy");
 		System.out.println("7 - Znajdz pojazdy mieszcz¹ce siê w podanym przedziale cenowym");
+		System.out.println("8 - Znajdz pojazdy o podanej nazwie marki");
 	}
 	
 	public static void vehicleMenu() {
@@ -60,6 +62,14 @@ public class Menu {
 	public static void showCurrentFoundPriceMenu() {
 		System.out.println("\n\n------------------");
 		System.out.println("Przegladaj pojazdy z podanego przedzia³u cenowego");
+		System.out.println(". - Nastepny znaleziony");
+		System.out.println(", - Poprzedni znaleziony");
+		System.out.println("x - Powrót do MENU");
+	}
+	
+	public static void showCurrentFoundMakeMenu() {
+		System.out.println("\n\n------------------");
+		System.out.println("Przegladaj pojazdy o podanej nazwie marki");
 		System.out.println(". - Nastepny znaleziony");
 		System.out.println(", - Poprzedni znaleziony");
 		System.out.println("x - Powrót do MENU");
@@ -92,7 +102,7 @@ public class Menu {
 				make = scanner.next();
 				System.out.print("Model: ");
 				model = scanner.next();
-				boolean valid = false;
+				valid = false;
 				do {
 					System.out.print("Moc silnika: ");
 					if(scanner.hasNextInt()) {
@@ -262,7 +272,7 @@ public class Menu {
 			}
 			break;
 		case '7':
-			boolean valid = false;
+			valid = false;
 			do {
 				System.out.println("Podaj cene min: ");
 				if(scanner.hasNextInt()) {
@@ -290,8 +300,10 @@ public class Menu {
 					scanner.next();
 				}	
 			}while(valid == false);
-			if(!fleet.searchPrice(min, max))
+			if(!fleet.searchPrice(min, max)) {
 				System.out.println("Nic nie znaleziono.");
+				break;
+			}
 			else 
 				fleet.showCurrentFoundPrice();
 			boolean foundPriceMenu = true;
@@ -309,6 +321,34 @@ public class Menu {
 						break;
 					case 'x':
 						foundPriceMenu = false;
+				}
+			}
+			break;
+		case '8':
+			System.out.println("Podaj szukan¹ nazwê marki: ");
+			makeName = scanner.next();
+			System.out.println(makeName);
+			if(!fleet.searchMake(makeName)) {
+				System.out.println("Nic nie znaleziono.");
+				break;
+			}
+			else
+				fleet.showCurrentFoundMake();
+			boolean foundMakeMenu = true;
+			while(foundMakeMenu) {
+				showCurrentFoundMakeMenu();
+				ch = select();
+				switch(ch) {
+					case '.':
+						fleet.nextFoundMake();
+						fleet.showCurrentFoundMake();
+						break;
+					case ',':
+						fleet.previousFoundMake();
+						fleet.showCurrentFoundMake();
+						break;
+					case 'x':
+						foundMakeMenu = false;
 				}
 			}
 			break;

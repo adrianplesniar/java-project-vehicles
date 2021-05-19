@@ -30,6 +30,7 @@ public class Fleet extends Vehicle {
 		this.size=size;
 		vehicles=new Vehicle[size];
 		foundPrice = new Vehicle[size];
+		foundMake = new Vehicle[size];
 		for (i=0; i<size; i++)
 			vehicles[i]=new Vehicle();
 		quantity=0;
@@ -115,8 +116,7 @@ public class Fleet extends Vehicle {
 		}
 	}
 	
-	boolean searchPrice(double min, double max)
-	{
+	boolean searchPrice(double min, double max) {
 		sizeFoundPrice = 0;
 		currentFoundPrice = -1;
 		
@@ -153,6 +153,47 @@ public class Fleet extends Vehicle {
 	{
 		if(currentFoundPrice>0)
 			currentFoundPrice--;
+	}
+
+	boolean searchMake(String makeName)
+	{
+		sizeFoundMake = 0;
+		currentFoundMake = -1;
+		
+		for(i = 0; i<quantity; i++)
+		{
+			if(vehicles[i].getMake().equalsIgnoreCase(makeName))
+			{
+				foundMake[sizeFoundMake]=vehicles[i];
+				sizeFoundMake++;
+			}
+		}
+		
+		if(sizeFoundMake != 0)
+		{
+			currentFoundMake = 0;
+			return true;
+		}
+		else
+			return false;
+	}
+
+	void showCurrentFoundMake()
+	{
+		if (currentFoundMake>=0)
+			foundMake[currentFoundMake].showCurrent();
+	}
+	
+	void nextFoundMake()
+	{
+		if(currentFoundMake<sizeFoundMake-1)
+			currentFoundMake++;
+	}
+
+	void previousFoundMake()
+	{
+		if(currentFoundMake>0)
+			currentFoundMake--;
 	}
 	
 	public void saveFile()
