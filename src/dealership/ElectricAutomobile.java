@@ -25,6 +25,14 @@ public class ElectricAutomobile extends Automobile {
 		this.drivingRange=drivingRange;
 		this.batteryLife=batteryLife;
 	}
+	
+	//copy constructor
+	
+	public ElectricAutomobile(ElectricAutomobile v) {
+		super(v);
+		drivingRange = v.drivingRange;
+		batteryLife = v.batteryLife;
+	}
 
 	public void clear() {
 		super.clear();

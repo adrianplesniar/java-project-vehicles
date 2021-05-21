@@ -26,6 +26,12 @@ public class GasAutomobile extends Automobile {
 		this.fuelEconomy=fuelEconomy;
 	}
 	
+	public GasAutomobile(GasAutomobile v) {
+		super(v);
+		engineCapacity = v.engineCapacity;
+		fuelEconomy = v.fuelEconomy;
+	}
+	
 	public void clear() {
 		super.clear();
 		engineCapacity=0;
@@ -55,8 +61,8 @@ public class GasAutomobile extends Automobile {
 	public void showCurrent() {
 		super.showCurrent();
 		System.out.println(
-			"Poejmnosc silnika: " + engineCapacity
-			+ "\nSrednie spalanie: " + fuelEconomy	
+			"Pojemnoœæ silnika: " + engineCapacity
+			+ "\nŒrednie spalanie: " + fuelEconomy	
 		);
 	}
 	

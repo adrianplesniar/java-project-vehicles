@@ -17,7 +17,6 @@ public class Fleet extends Vehicle {
 	protected int currentFoundMake;
 	protected int sizeFoundMake;
 	protected int currentSorted;
-	protected int sizeSorted;
 	private int i;
 	
 	public Fleet() {
@@ -28,9 +27,7 @@ public class Fleet extends Vehicle {
 	public Fleet(int size)
 	{
 		this.size=size;
-		vehicles=new Vehicle[size];
-		foundPrice = new Vehicle[size];
-		foundMake = new Vehicle[size];
+		vehicles = new Vehicle[size];
 		for (i=0; i<size; i++)
 			vehicles[i]=new Vehicle();
 		quantity=0;
@@ -43,7 +40,6 @@ public class Fleet extends Vehicle {
 	public void newFleet(int size) {
 		this.size=size;
 		vehicles=new Vehicle[size];
-		foundPrice = new Vehicle[size];
 		for (i=0; i<size; i++)
 			vehicles[i]=new Vehicle();
 		quantity=0;
@@ -69,9 +65,34 @@ public class Fleet extends Vehicle {
 		quantity++;
 	}
 	
+	public boolean updateCurrentVehicle(Vehicle v) {
+		if(current == -1)
+			return false;
+		else {
+			vehicles[current] = v;
+			return true;
+		}
+	}
+	
+	public int checkCurrentVehicleClass() {
+		if(current == -1)
+			return 0;
+		else {
+			if(vehicles[current].getClass().getSimpleName().equals("GasAutomobile"))
+				return 1;
+			else if(vehicles[current].getClass().getSimpleName().equals("ElectricAutomobile"))
+				return 2;
+			else if(vehicles[current].getClass().getSimpleName().equals("Motorcycle"))
+				return 3;
+			else
+				return 4;
+		}
+	}
+	
 	public void printFleet() {
         for (int i = 0; i < quantity; i++) {
             vehicles[i].print();
+            System.out.println("Klasa: " + vehicles[i].getClass());
             System.out.printf("%n");
         }
     }
@@ -116,7 +137,10 @@ public class Fleet extends Vehicle {
 		}
 	}
 	
-	boolean searchPrice(double min, double max) {
+	//search price
+	
+	public boolean searchPrice(double min, double max) {
+		foundPrice = new Vehicle[size];
 		sizeFoundPrice = 0;
 		currentFoundPrice = -1;
 		
@@ -137,26 +161,29 @@ public class Fleet extends Vehicle {
 			return false;
 	}
 	
-	void showCurrentFoundPrice()
+	public void showCurrentFoundPrice()
 	{
 		if (currentFoundPrice>=0)
 			foundPrice[currentFoundPrice].showCurrent();
 	}
 	
-	void nextFoundPrice()
+	public void nextFoundPrice()
 	{
 		if(currentFoundPrice<sizeFoundPrice-1)
 			currentFoundPrice++;
 	}
 
-	void previousFoundPrice()
+	public void previousFoundPrice()
 	{
 		if(currentFoundPrice>0)
 			currentFoundPrice--;
 	}
+	
+	//search make
 
-	boolean searchMake(String makeName)
+	public boolean searchMake(String makeName)
 	{
+		foundMake = new Vehicle[size];
 		sizeFoundMake = 0;
 		currentFoundMake = -1;
 		
@@ -178,23 +205,201 @@ public class Fleet extends Vehicle {
 			return false;
 	}
 
-	void showCurrentFoundMake()
+	public void showCurrentFoundMake()
 	{
 		if (currentFoundMake>=0)
 			foundMake[currentFoundMake].showCurrent();
 	}
 	
-	void nextFoundMake()
+	public void nextFoundMake()
 	{
 		if(currentFoundMake<sizeFoundMake-1)
 			currentFoundMake++;
 	}
 
-	void previousFoundMake()
+	public void previousFoundMake()
 	{
 		if(currentFoundMake>0)
 			currentFoundMake--;
 	}
+
+	//sorted methods
+	
+	public void showSorted()
+	{
+		if (currentSorted>=0)
+			sorted[currentSorted].showCurrent();
+	}
+	
+	public void nextSorted()
+	{
+		if(currentSorted<quantity-1)
+			currentSorted++;
+	}
+
+	public void previousSorted()
+	{
+		if(currentSorted>0)
+			currentSorted--;
+	}
+	
+	//sort year ascending
+	
+	public boolean sortYearAscending()
+	{
+		boolean isSorted = false;
+		sorted = new Vehicle[quantity];
+		for(i=0;i<quantity;i++) {
+			sorted[i] = vehicles[i];
+		}
+		currentSorted = -1;
+		
+	    while(!isSorted) {
+	        isSorted = true;
+	        for (i = 0; i < quantity - 1; i++) {
+	        	if (sorted[i].getYear()>sorted[i+1].getYear()) {
+	        		Class<? extends Vehicle> vSubClass = sorted[i].getClass();
+  					Vehicle temp;
+					try {
+						temp = vSubClass.getDeclaredConstructor().newInstance();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+  					temp = sorted[i];
+  					sorted[i] = sorted[i+1];
+  					sorted[i+1] = temp;
+  					isSorted = false;
+  				}
+	        }
+	    }
+		
+		if(quantity>0)
+		{
+			currentSorted = 0;
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	//sort year descending
+	
+	public boolean sortYearDescending()
+	{
+		boolean isSorted = false;
+		sorted = new Vehicle[quantity];
+		for(i=0;i<quantity;i++) {
+			sorted[i] = vehicles[i];
+		}
+		currentSorted = -1;
+		
+	    while(!isSorted) {
+	        isSorted = true;
+	        for (i = 0; i < quantity - 1; i++) {
+	        	if (sorted[i].getYear()<sorted[i+1].getYear()) {
+	        		Class<? extends Vehicle> vSubClass = sorted[i].getClass();
+  					Vehicle temp;
+					try {
+						temp = vSubClass.getDeclaredConstructor().newInstance();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+  					temp = sorted[i];
+  					sorted[i] = sorted[i+1];
+  					sorted[i+1] = temp;
+  					isSorted = false;
+  				}
+	        }
+	    }
+		
+		if(quantity>0)
+		{
+			currentSorted = 0;
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	//sort make ascending
+	
+	public boolean sortMakeAscending()
+	{
+		boolean isSorted = false;
+		sorted = new Vehicle[quantity];
+		for(i=0;i<quantity;i++) {
+			sorted[i] = vehicles[i];
+		}
+		currentSorted = -1;
+		
+	    while(!isSorted) {
+	        isSorted = true;
+	        for (i = 0; i < quantity - 1; i++) {
+	        	if (sorted[i].getMake().compareToIgnoreCase(sorted[i+1].getMake()) > 0) {
+	        		Class<? extends Vehicle> vSubClass = sorted[i].getClass();
+  					Vehicle temp;
+					try {
+						temp = vSubClass.getDeclaredConstructor().newInstance();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+  					temp = sorted[i];
+  					sorted[i] = sorted[i+1];
+  					sorted[i+1] = temp;
+  					isSorted = false;
+  				}
+	        }
+	    }
+		
+		if(quantity>0)
+		{
+			currentSorted = 0;
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	//sort make descending
+	
+	public boolean sortMakeDescending()
+	{
+		boolean isSorted = false;
+		sorted = new Vehicle[quantity];
+		for(i=0;i<quantity;i++) {
+			sorted[i] = vehicles[i];
+		}
+		currentSorted = -1;
+		
+	    while(!isSorted) {
+	        isSorted = true;
+	        for (i = 0; i < quantity - 1; i++) {
+	        	if (sorted[i].getMake().compareToIgnoreCase(sorted[i+1].getMake()) < 0) {
+	        		Class<? extends Vehicle> vSubClass = sorted[i].getClass();
+  					Vehicle temp;
+					try {
+						temp = vSubClass.getDeclaredConstructor().newInstance();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+  					temp = sorted[i];
+  					sorted[i] = sorted[i+1];
+  					sorted[i+1] = temp;
+  					isSorted = false;
+  				}
+	        }
+	    }
+		
+		if(quantity>0)
+		{
+			currentSorted = 0;
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	//save & read file
 	
 	public void saveFile()
 	{

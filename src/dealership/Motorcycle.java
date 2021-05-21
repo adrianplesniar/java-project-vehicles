@@ -24,6 +24,14 @@ public class Motorcycle extends Vehicle {
 		this.isStreetLegal=isStreetLegal;
 	}
 	
+	//copy constructor
+	
+	public Motorcycle(Motorcycle v) {
+		super(v);
+		type = v.type;
+		isStreetLegal = v.isStreetLegal;
+	}
+	
 	public void clear() {
 		super.clear();
 		type="";

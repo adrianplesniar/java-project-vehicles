@@ -23,6 +23,14 @@ public class Automobile extends Vehicle {
 		this.cargoCapacity=cargoCapacity;
 	}
 	
+	//copy constructor
+	
+	public Automobile(Automobile v) {
+		super(v);
+		bodyStyle = v.bodyStyle;
+		cargoCapacity = v.cargoCapacity;
+	}
+	
 	public void clear() {
 		super.clear();
 		bodyStyle="";

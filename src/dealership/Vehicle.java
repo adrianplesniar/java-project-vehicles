@@ -26,6 +26,16 @@ public class Vehicle implements Serializable {
 		this.price=price;
 	}
 	
+	//copy constructor
+	
+	public Vehicle(Vehicle v) {
+		make = v.make;
+		model = v.model;
+		horsepower = v.horsepower;
+		year = v.year;
+		price = v.price;
+	}
+	
 	public void clear() {
 		make="";
 		model="";
@@ -42,12 +52,6 @@ public class Vehicle implements Serializable {
 		this.price=price;
 	}
 	
-	public void print() {
-		System.out.print(
-			"Marka: " + make + " | model: " + model + " | KM: " + horsepower + " | rok: " + year + " | cena: " + price
-		);
-	}
-	
 	public void showCurrent() {
 		System.out.println(
 			"Marka: " + make
@@ -57,6 +61,8 @@ public class Vehicle implements Serializable {
 			+ "\nCena: " + price	
 		);
 	}
+	
+	//setters
 	
 	public void setMake(String make) {
 		this.make=make;
@@ -78,6 +84,8 @@ public class Vehicle implements Serializable {
 		this.price=price;
 	}
 	
+	//getters
+	
 	public String getMake() {
 		return make;
 	}
@@ -96,5 +104,13 @@ public class Vehicle implements Serializable {
 	
 	public double getPrice() {
 		return price;
+	}
+	
+	//print method for testing purposes
+	
+	public void print() {
+		System.out.print(
+			"Marka: " + make + " | model: " + model + " | KM: " + horsepower + " | rok: " + year + " | cena: " + price
+		);
 	}
 }
